@@ -1,0 +1,23 @@
+.loginContainer {
+  height: 100vh;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background-image: url("https://mmc.tirto.id/image/2018/12/31/perawatan-pesawat-gmf-aero-asia-tirto-mico-1_ratio-16x9.jpg"); */
+}
+
+.containerLogin {
+  background-color: white;
+  border-radius: 8px;
+  height: 400px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  z-index: 100;
+}
+
+.imgLogo {
+  margin-top: -50px;
+  height: 100px;
+}

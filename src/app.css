@@ -1,0 +1,34 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: auto;
+  margin-top: 50px;
+  width: 700px;
+  align-items: center;
+  border: 1px solid #dddddd;
+  height: fit-content;
+  padding-bottom: 20px;
+}
+
+.app .select {
+  width: 100%;
+}
+
+.app button {
+  width: 100px;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.boxDetail h3 {
+  text-transform: uppercase;
+  font-size: 100px;
+}
