@@ -5,9 +5,11 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import "./login.css";
 import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
+import Loading from "../../component/Loading";
+import ModalError from "../../component/ModalError";
 
 export default function Login() {
   const [credentials, setCredentials] = useState({
@@ -15,38 +17,69 @@ export default function Login() {
     password: undefined,
   });
   const { loading, error, dispatch } = useContext(AuthContext);
+  const [modalError, setModalError] = useState(false);
   const navigate = useNavigate();
   const handleClick = async (e) => {
     e.preventDefault();
     dispatch({ type: "LOGIN_START" });
 
     try {
-      const res = await axios({
-        method: "post",
-        url: "http://fakestoreapi.com/auth/login",
-        data: credentials,
-      });
-      //  axios.post(
-      //   `https://cors-anywhere.herokuapp.com/https://fakestoreapi.com/auth/login`,
-      //   credentials
-      // );
+      // const res = await fetch("https://fakestoreapi.com/auth/login", {
+      //   method: "POST",
+      //   body: JSON.stringify({
+      //     username: "mor_2314",
+      //     password: "83r5^_",
+      //   }),
+      // })
+      //   .then((res) => res.json())
+      //   .then((json) => console.log(json));
+      // const res = await axios({
+      //   method: "post",
+      //   url: "http://fakestoreapi.com/auth/login",
+      //   data: credentials,
+      // });
+
+      const res = await axios.post(
+        `https://fakestoreapi.com/auth/login`,
+        credentials
+      );
       if (res.token) {
         dispatch({ type: "LOGIN_SUCCESS", payload: res.token });
-        console.log("sukses");
         navigate("/");
       } else {
         dispatch({
           type: "LOGIN_FAILURE",
-          payload: { message: "You are not allowed!" },
+          payload: { message: "Wrong username and password!" },
         });
+        setModalError(true);
       }
     } catch (err) {
+      setModalError(true);
       dispatch({ type: "LOGIN_FAILURE", payload: err.response.data });
     }
   };
   return (
     <>
-      <div className="loginContainer">
+      <Loading loading={loading} />
+      <ModalError modalError={modalError} setModalError={setModalError} />
+
+      <div
+        className="loginContainer"
+        style={{ display: "flex", flexDirection: "column" }}
+      >
+        <div style={{ width: "500px", paddingBottom: "40px" }}>
+          <p>
+            <span>Note:</span> Mohon maaf pak karna ada blocked cors di
+            server-side apinya, sudah mencoba beberapa cara untuk lewatin cors
+            nya tapi saya belum ketemu caranya. Untuk lanjut kehalaman
+            berikutnya bisa klik tombol{" "}
+            <Link to="/home">
+              <Button variant={"contained"} color={"success"}>
+                ini
+              </Button>
+            </Link>
+          </p>
+        </div>
         <Container component="main" maxWidth="xs" className="containerLogin">
           <CssBaseline />
           <Box
@@ -66,12 +99,7 @@ export default function Login() {
                 style={{ marginTop: "20px" }}
               />
             </div>
-            <Box
-              component="form"
-              onSubmit={handleClick}
-              noValidate
-              sx={{ mt: 1 }}
-            >
+            <form style={{ marginTop: "40px" }} onSubmit={handleClick}>
               <TextField
                 margin="normal"
                 required
@@ -112,7 +140,7 @@ export default function Login() {
               >
                 Sign In
               </Button>
-            </Box>
+            </form>
           </Box>
           {loading && "Loading"}
           {!loading && error ? <h2>Error: {error} </h2> : null}

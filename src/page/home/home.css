@@ -8,4 +8,10 @@
   margin: auto;
   border: 1px solid black;
   padding: 10px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border-radius: 10px;
+}
+
+.titleHome {
+  text-align: center;
 }
